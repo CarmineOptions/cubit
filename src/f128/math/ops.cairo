@@ -47,6 +47,7 @@ fn ceil(a: Fixed) -> Fixed {
     }
 }
 
+#[feature("corelib-internal-use")]
 fn div(a: Fixed, b: Fixed) -> Fixed {
     let (a_high, a_low) = integer::u128_wide_mul(a.mag, ONE_u128);
     let a_u256 = u256 { low: a_low, high: a_high };
@@ -185,6 +186,7 @@ fn lt(a: Fixed, b: Fixed) -> bool {
     }
 }
 
+#[feature("corelib-internal-use")]
 fn mul(a: Fixed, b: Fixed) -> Fixed {
     let (high, low) = integer::u128_wide_mul(a.mag, b.mag);
     let res_u256 = u256 { low: low, high: high };
@@ -203,6 +205,7 @@ struct f64 {
     sign: bool
 }
 
+#[feature("corelib-internal-use")]
 fn mul_64(a: f64, b: f64) -> f64 {
     let prod_u128 = integer::u64_wide_mul(a.mag, b.mag);
     return f64 { mag: (prod_u128 / 4294967296).try_into().unwrap(), sign: a.sign ^ b.sign };
@@ -287,6 +290,7 @@ fn round(a: Fixed) -> Fixed {
 
 // Calculates the square root of a fixed point value
 // x must be positive
+#[feature("corelib-internal-use")]
 fn sqrt(a: Fixed) -> Fixed {
     assert(a.sign == false, 'must be positive');
     let root = integer::u128_sqrt(a.mag);
