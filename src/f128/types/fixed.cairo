@@ -92,16 +92,16 @@ impl FixedImpl of FixedTrait {
     }
 
     fn new_unscaled(mag: u128, sign: bool) -> Fixed {
-        return FixedTrait::new(mag * ONE_u128, sign);
+        return Self::new(mag * ONE_u128, sign);
     }
 
     fn from_felt(val: felt252) -> Fixed {
         let mag = core::integer::u128_try_from_felt252(utils::felt_abs(val)).unwrap();
-        return FixedTrait::new(mag, utils::felt_sign(val));
+        return Self::new(mag, utils::felt_sign(val));
     }
 
     fn from_unscaled_felt(val: felt252) -> Fixed {
-        return FixedTrait::from_felt(val * ONE);
+        return Self::from_felt(val * ONE);
     }
 
     fn abs(self: Fixed) -> Fixed {
@@ -430,6 +430,7 @@ impl FixedAdd of Add<Fixed> {
     }
 }
 
+#[feature("deprecated-op-assign-traits")]
 impl FixedAddEq of AddEq<Fixed> {
     #[inline(always)]
     fn add_eq(ref self: Fixed, other: Fixed) {
@@ -443,6 +444,7 @@ impl FixedSub of Sub<Fixed> {
     }
 }
 
+#[feature("deprecated-op-assign-traits")]
 impl FixedSubEq of SubEq<Fixed> {
     #[inline(always)]
     fn sub_eq(ref self: Fixed, other: Fixed) {
@@ -456,6 +458,7 @@ impl FixedMul of Mul<Fixed> {
     }
 }
 
+#[feature("deprecated-op-assign-traits")]
 impl FixedMulEq of MulEq<Fixed> {
     #[inline(always)]
     fn mul_eq(ref self: Fixed, other: Fixed) {
@@ -469,6 +472,7 @@ impl FixedDiv of Div<Fixed> {
     }
 }
 
+#[feature("deprecated-op-assign-traits")]
 impl FixedDivEq of DivEq<Fixed> {
     #[inline(always)]
     fn div_eq(ref self: Fixed, other: Fixed) {
@@ -551,7 +555,7 @@ impl FixedOne of core::num::traits::One<Fixed> {
     }
     #[inline(always)]
     fn is_one(self: @Fixed) -> bool {
-        *self == FixedOne::one()
+        *self == Self::one()
     }
     #[inline(always)]
     fn is_non_one(self: @Fixed) -> bool {
